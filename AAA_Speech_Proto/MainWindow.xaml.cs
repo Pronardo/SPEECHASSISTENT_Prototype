@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,7 +20,7 @@ namespace AAA_Speech_Proto
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SpeechRecon speechRecon = new SpeechRecon();
+        private SpeechRecon speechRecon = new VeryFirstRecon();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,9 +31,9 @@ namespace AAA_Speech_Proto
             speechRecon.StartRecognize(SpeechRecognized);
         }
 
-        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        private void SpeechRecognized(object sender, MySpeechEventArgs e)
         {
-            lblText.Content = e.Result.Text;
+            lblText.Content = e.Text;
         }
     }
 }
