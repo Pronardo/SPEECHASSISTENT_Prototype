@@ -10,14 +10,18 @@ namespace AAA_Speech_Proto
 {
     class VeryFirstRecon : SpeechRecon
     {
-        private EventHandler<MySpeechEventArgs> speechRecognized;
-        public void StartRecognize(EventHandler<MySpeechEventArgs> speechRecognized)
+        private EventHandler<MySpeechEventArgs> speechRecognized; //Response Delegate
+        private bool isBusy;
+        public void StartRecognize(EventHandler<MySpeechEventArgs> speechRecognized) //speechRecognized is callback handler
         {
-            this.speechRecognized = speechRecognized;
+            if (isBusy) return;
+            isBusy = true;
+            this.speechRecognized = speechRecognized; //Keep callback in mind
             using (var recognizer = new SpeechRecognitionEngine(new CultureInfo("en-US")))
             {
+                Console.WriteLine("StartRecognition");
                 recognizer.LoadGrammar(new DictationGrammar());
-                recognizer.SpeechRecognized += Recognizer_SpeechRecognized; ;
+                recognizer.SpeechRecognized += Recognizer_SpeechRecognized; ; //Call Recognizer_SpeechRecognized when finished
                 recognizer.SetInputToDefaultAudioDevice();
                 recognizer.RecognizeAsync(RecognizeMode.Multiple);
             }
@@ -25,7 +29,8 @@ namespace AAA_Speech_Proto
 
         private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-          string text=  e.Result.ToString();
+            Console.WriteLine("Callback Caller");
+          string text=  e.Result.ToString(); //Translation from Recognizer event to own event
             speechRecognized(this, new MySpeechEventArgs { Text = text });
         }
     }
