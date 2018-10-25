@@ -29,10 +29,10 @@ namespace AAA_Speech_Proto
         private void BtnRecognize_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Button clicked");
-            speechRecon.StartRecognize(SpeechRecognized); //SpeechRecognized is the response method
+            speechRecon.StartRecognize(SpeechResponse); //SpeechRecognized is the response method
         }
 
-        private void SpeechRecognized(object sender, MySpeechEventArgs e)
+        private void SpeechResponse(object sender, MySpeechEventArgs e)
         {
             Console.Write("Retrieved Response - interpreted data");
             lblText.Content = e.Text; //Write response data in label

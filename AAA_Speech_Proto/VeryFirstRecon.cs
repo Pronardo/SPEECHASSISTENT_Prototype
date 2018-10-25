@@ -12,11 +12,11 @@ namespace AAA_Speech_Proto
     {
         private EventHandler<MySpeechEventArgs> speechRecognized; //Response Delegate
         private bool isBusy;
-        public void StartRecognize(EventHandler<MySpeechEventArgs> speechRecognized) //speechRecognized is callback handler
+        public void StartRecognize(EventHandler<MySpeechEventArgs> callback) //speechRecognized is callback handler
         {
             if (isBusy) return;
             isBusy = true;
-            this.speechRecognized = speechRecognized; //Keep callback in mind
+            this.speechRecognized = callback; //Keep callback in mind
             using (var recognizer = new SpeechRecognitionEngine(new CultureInfo("en-US")))
             {
                 Console.WriteLine("StartRecognition");
