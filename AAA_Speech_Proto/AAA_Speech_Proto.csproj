@@ -56,8 +56,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MySpeechEventArgs.cs" />
+    <Compile Include="SpeechCommand.cs" />
+    <Compile Include="SpeechProcessor.cs" />
     <Compile Include="SpeechRecon.cs" />
     <Compile Include="VeryFirstRecon.cs" />
+    <Compile Include="WPFSpeechProcessor.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

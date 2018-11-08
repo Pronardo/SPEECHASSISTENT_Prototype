@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AAA_Speech_Proto"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Content>
     <Grid>
         <Button Name="BtnRecognize" Content="Start Recognize"
                 HorizontalAlignment="Left" Margin="110,82,0,0" VerticalAlignment="Top" Width="75"
@@ -13,6 +15,10 @@
         <Label Content="Text comes here..." Name="lblText"
                Tag="Firstname"
                HorizontalAlignment="Left" Margin="110,189,0,0" VerticalAlignment="Top" Width="150"/>
-
+            <StackPanel>
+                <Button Name="BtnXxx" Content="Another Button"/>
+                <Label Name="LblXxx" Content="Another Label"/>
+            </StackPanel>
     </Grid>
+    </Window.Content>
 </Window>
