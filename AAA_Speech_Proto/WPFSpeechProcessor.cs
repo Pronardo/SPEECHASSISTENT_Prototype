@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,5 +40,16 @@ namespace AAA_Speech_Proto
             property.SetValue(target, command.Value);
             Console.WriteLine($"Cahnged {property} @ {target} to {property.GetValue(target)}");
         }
+
+        internal override SpeechCommand ExtractCommand(string input)
+        {
+            Match m = Regex.Match(input, @"(?<control>\w+)\s+(?<property>\w+)\s+(?<value>\w+)");
+            SpeechCommand command = new SpeechCommand();
+            command.ControlName = m.Groups["control"].Value;
+            command.PropertyName = m.Groups["property"].Value;
+            command.Value = m.Groups["value"].Value;
+            return command;
+        }
+
     }
 }
