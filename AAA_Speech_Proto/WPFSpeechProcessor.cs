@@ -11,8 +11,9 @@ namespace AAA_Speech_Proto
 {
     public class WPFSpeechProcessor : SpeechProcessor
     {
-        protected List<FrameworkElement> controls = new List<FrameworkElement>();
+        protected List<UIElement> controls = new List<UIElement>();
 
+        //public WPFSpeechProcessor(Window window) : base(window) { }
         public void Init(Window window)
         {
             isInitialized = true;
@@ -24,7 +25,7 @@ namespace AAA_Speech_Proto
 
         private void FindControls(Panel panel)
         {
-            foreach (var control in panel.Children.OfType<FrameworkElement>())
+            foreach (var control in panel.Children.OfType<UIElement>())
             {
                 Console.WriteLine($"adding {control}");
                 if (control is Panel) FindControls(control as Panel);
@@ -32,12 +33,17 @@ namespace AAA_Speech_Proto
             }
         }
 
-        internal override void DoProcess(SpeechCommand command)
+        internal override void DoProcess(SpeechCommand command) //public void process(string context, string input)
         {
-            FrameworkElement target=controls.Where(x => x.Tag.ToString()==command.ControlName).First();
-            PropertyInfo property = target.GetType().GetProperty(command.PropertyName);
-            property.SetValue(target, command.Value);
-            Console.WriteLine($"Changed {property} @ {target} to {property.GetValue(target)}");
+
+            //Assembly assembly = Assembly.GetExecutingAssembly(); // Assembly mscorlib = typeof(string).Assembly;
+            //Type[] types = assembly.GetTypes();
+            //var windows = types.ToList()
+            //    .Where(current => current.BaseType == typeof(Window));
+            //var window = windows.First();
+            Console.WriteLine("");
+
+            //controls.Where(x.Tag => command.ControlName);
         }
     }
 }
