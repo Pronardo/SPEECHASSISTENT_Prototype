@@ -6,7 +6,7 @@ using System.Speech.Recognition;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AAA_Speech_Proto
+namespace AAA_Speech_Proto.Speech2Text
 {
     class VeryFirstRecon : SpeechRecon
     {

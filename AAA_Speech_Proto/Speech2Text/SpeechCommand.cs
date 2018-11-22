@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AAA_Speech_Proto
+namespace AAA_Speech_Proto.Speech2Text
 {
    internal class SpeechCommand
     {

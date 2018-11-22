@@ -55,12 +55,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MySpeechEventArgs.cs" />
-    <Compile Include="SpeechCommand.cs" />
-    <Compile Include="SpeechProcessor.cs" />
-    <Compile Include="SpeechRecon.cs" />
-    <Compile Include="VeryFirstRecon.cs" />
-    <Compile Include="WPFSpeechProcessor.cs" />
+    <Compile Include="Speech2Text\MySpeechEventArgs.cs" />
+    <Compile Include="Speech2Text\SpeechCommand.cs" />
+    <Compile Include="Speech2Text\SpeechProcessor.cs" />
+    <Compile Include="Speech2Text\SpeechRecon.cs" />
+    <Compile Include="Speech2Text\VeryFirstRecon.cs" />
+    <Compile Include="Speech2Text\WPFSpeechProcessor.cs" />
+    <Compile Include="Text2Speech\SpeechSynth.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AAA_Speech_Proto
+namespace AAA_Speech_Proto.Speech2Text
 {
     public abstract class SpeechProcessor
     {

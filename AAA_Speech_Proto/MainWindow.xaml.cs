@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AAA_Speech_Proto.Speech2Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +38,18 @@ namespace AAA_Speech_Proto
         {
             Console.Write("Retrieved Response - interpreted data");
             lblText.Content = e.Text; //Write response data in label
+            WPFSpeechProcessor processor = new WPFSpeechProcessor();
+            processor.Init(this);
+            processor.Process(e.Text); //-> DoProcess is internal & concrete
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var synthesizer = new SpeechSynthesizer();
+                synthesizer.Volume = 100;
+                synthesizer.Rate = -2;
+            synthesizer.Speak("Hello User");
+
         }
     }
 }
