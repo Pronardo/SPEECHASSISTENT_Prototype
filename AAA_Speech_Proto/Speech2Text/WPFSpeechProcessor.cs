@@ -43,7 +43,7 @@ namespace AAA_Speech_Proto.Speech2Text
 
         internal override SpeechCommand ExtractCommand(string input)
         {
-            Match m = Regex.Match(input, @"(?<control>\w+)\s+(?<property>\w+)\s+(?<value>\w+)");
+            Match m = Regex.Match(input, @"(?<control>\w+)\s+(?<property>\w+)\s+(?<value>.+)");
             SpeechCommand command = new SpeechCommand();
             command.ControlName = m.Groups["control"].Value;
             command.PropertyName = m.Groups["property"].Value;
