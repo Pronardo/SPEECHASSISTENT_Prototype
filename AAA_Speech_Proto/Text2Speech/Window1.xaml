@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Window1" Height="402.37" Width="378.4" Loaded="Window_Loaded">
     <Grid>
-        <TextBox x:Name="txtbox" HorizontalAlignment="Left" Height="294" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="352" Margin="10,10,0,0" Loaded="TextBox_Loaded"/>
+        <TextBox x:Name="txtbox" HorizontalAlignment="Left" Height="294" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="352" Margin="10,10,0,0"/>
         <Button x:Name="btnSpeak" Content="Speak" HorizontalAlignment="Left" Margin="11,309,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Button x:Name="btnResume" Content="Resume" HorizontalAlignment="Left" Margin="107,309,0,0" VerticalAlignment="Top" Width="75" Click="btnResume_Click"/>
         <Button x:Name="btnPause" Content="Pause" HorizontalAlignment="Left" Margin="198,309,0,0" VerticalAlignment="Top" Width="75" Click="btnPause_Click"/>
