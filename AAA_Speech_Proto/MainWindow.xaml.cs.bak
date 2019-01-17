@@ -23,8 +23,6 @@ namespace AAA_Speech_Proto
     public partial class MainWindow : Window
     {
         private SpeechRecon speechRecon = new VeryFirstRecon();
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +36,7 @@ namespace AAA_Speech_Proto
 
         private void SpeechResponse(object sender, MySpeechEventArgs e)
         {
-            Console.WriteLine("Retrieved Response - interpreted data");
+            Console.Write("Retrieved Response - interpreted data");
             lblText.Content = e.Text; //Write response data in label
             WPFSpeechProcessor processor = new WPFSpeechProcessor();
             processor.Init(this);
@@ -48,8 +46,8 @@ namespace AAA_Speech_Proto
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var synthesizer = new SpeechSynthesizer();
-            synthesizer.Volume = 100;
-            synthesizer.Rate = -2;
+                synthesizer.Volume = 100;
+                synthesizer.Rate = -2;
             synthesizer.Speak("Hello User");
 
         }

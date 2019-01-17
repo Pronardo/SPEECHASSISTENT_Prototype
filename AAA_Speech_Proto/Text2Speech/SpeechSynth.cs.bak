@@ -5,7 +5,8 @@ namespace AAA_Speech_Proto.Text2Speech
 {
     class SpeechSynth
     {
-        static void ProGo()
+        Point MouseCoordinates;
+        static void ProGO()
         {
             using (var synthesizer = new SpeechSynthesizer())
             {

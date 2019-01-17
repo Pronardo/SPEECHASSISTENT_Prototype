@@ -14,12 +14,11 @@
                 Click="BtnRecognize_Click"/>
         <Label Content="Text comes here..." Name="lblText"
                Tag="Firstname"
-               HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" Width="387"/>
-      <StackPanel>
-        <Button Name="BtnXxx" Content="Another Button"/>
-        <Label Name="LblXxx" Content="Another Label"/>
-        <TextBox Name="txtDummy" Text="Say 'Name Text Hansi'" Tag="Name"/>
-      </StackPanel>
+               HorizontalAlignment="Left" Margin="110,189,0,0" VerticalAlignment="Top" Width="150"/>
+            <StackPanel>
+                <Button Name="BtnXxx" Content="Another Button"/>
+                <Label Name="LblXxx" Content="Another Label"/>
+            </StackPanel>
     </Grid>
     </Window.Content>
 </Window>
