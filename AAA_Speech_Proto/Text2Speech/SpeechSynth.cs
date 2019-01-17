@@ -3,15 +3,8 @@ using System.Windows;
 
 namespace AAA_Speech_Proto.Text2Speech
 {
-    class SpeechSynth
+    interface SpeechSynth
     {
-        static void ProGo()
-        {
-            using (var synthesizer = new SpeechSynthesizer())
-            {
-                synthesizer.Volume = 100;
-                synthesizer.Rate = -2;
-            }
-        }
+        void SynthesizeInput(string input);
     }
 }

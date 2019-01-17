@@ -61,6 +61,7 @@
     <Compile Include="Speech2Text\SpeechRecon.cs" />
     <Compile Include="Speech2Text\VeryFirstRecon.cs" />
     <Compile Include="Speech2Text\WPFSpeechProcessor.cs" />
+    <Compile Include="Text2Speech\MicrosoftSynthesizer.cs" />
     <Compile Include="Text2Speech\SpeechSynth.cs" />
     <Compile Include="Text2Speech\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>

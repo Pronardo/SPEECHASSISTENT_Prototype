@@ -1,4 +1,5 @@
 ﻿using AAA_Speech_Proto.Speech2Text;
+using AAA_Speech_Proto.Text2Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,11 +48,8 @@ namespace AAA_Speech_Proto
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var synthesizer = new SpeechSynthesizer();
-            synthesizer.Volume = 100;
-            synthesizer.Rate = -2;
-            synthesizer.Speak("Hello User");
-
+            var synthesizer = new MicrosoftSynthesizer();
+            synthesizer.SynthesizeInput("Hello User");
         }
     }
 }
