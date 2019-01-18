@@ -48,7 +48,7 @@ namespace AAA_Speech_Proto
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var synthesizer = new MicrosoftSynthesizer();
+            var synthesizer = new WPFMicrosoftSynthesizer(this);
             synthesizer.SynthesizeInput("Hello User");
         }
     }
