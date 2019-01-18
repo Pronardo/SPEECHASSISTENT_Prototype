@@ -63,8 +63,7 @@ namespace AAA_Speech_Proto.Text2Speech
         {
             string elename = "Button";
             //Dispatcher does not lead to expected results
-            Application.Current.Dispatcher.BeginInvoke(
-              DispatcherPriority.Background,
+            Application.Current.Dispatcher.InvokeAsync(
               new Action(() =>
                     elename = element.Name
               ));
@@ -75,8 +74,7 @@ namespace AAA_Speech_Proto.Text2Speech
                 var prop = SpeechMappings[elename];
 
                 Object target = new object();
-                Application.Current.Dispatcher.BeginInvoke(
-                    DispatcherPriority.Background,
+                Application.Current.Dispatcher.InvokeAsync(
                     new Action(() => target = element));
 
                 Type type = element.GetType();
