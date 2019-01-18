@@ -49,7 +49,7 @@ namespace AAA_Speech_Proto.Text2Speech
             var mouseMove = Observable.FromEventPattern<MouseEventArgs>(element, "MouseMove")
                 .Sample(TimeSpan.FromMilliseconds(DebounceTimer))
                .Subscribe(
-                    args => Process(args.Sender as FrameworkElement),
+                    args => Process(args.EventArgs.Source as FrameworkElement),
                     error => LogError(error)
             );
         }
@@ -61,30 +61,26 @@ namespace AAA_Speech_Proto.Text2Speech
 
         private void Process(FrameworkElement element)
         {
-            string elename = "Button";
-            //Dispatcher does not lead to expected results
-            Application.Current.Dispatcher.InvokeAsync(
-              new Action(() =>
-                    elename = element.Name
-              ));
-
-            if (SpeechMappings.ContainsKey(elename))
+            Type type = element.GetType();
+            string eletype = type.ToString();
+            eletype = "Button";
+            if (SpeechMappings.ContainsKey(eletype))
             {
-                Console.WriteLine($"Evaluate speech output for {elename}");
-                var prop = SpeechMappings[elename];
+                Console.WriteLine($"Evaluate speech output for {eletype}");
+                var prop = SpeechMappings[eletype];
 
-                Object target = new object();
+                Object target = new Object();
                 Application.Current.Dispatcher.InvokeAsync(
                     new Action(() => target = element));
 
-                Type type = element.GetType();
+                
                 PropertyInfo property = type.GetProperty(prop);
                 string propertyvalue = property.GetValue(target).ToString();
                 SynthesizeInput(propertyvalue);
             }
             else
             {
-                Console.WriteLine($"Element {elename} is not mapped with speech settings");
+                Console.WriteLine($"Element {eletype} is not mapped with speech settings");
             }
         }
     }
