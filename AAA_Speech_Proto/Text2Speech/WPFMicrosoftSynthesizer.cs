@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace AAA_Speech_Proto.Text2Speech
 {
@@ -60,13 +61,27 @@ namespace AAA_Speech_Proto.Text2Speech
 
         private void Process(FrameworkElement element)
         {
-            string elename = element.Name;
-            if(SpeechMappings.ContainsKey(elename))
+            string elename = "Button";
+            //Dispatcher does not lead to expected results
+            Application.Current.Dispatcher.BeginInvoke(
+              DispatcherPriority.Background,
+              new Action(() =>
+                    elename = element.Name
+              ));
+
+            if (SpeechMappings.ContainsKey(elename))
             {
                 Console.WriteLine($"Evaluate speech output for {elename}");
-                var prop=SpeechMappings[elename];
+                var prop = SpeechMappings[elename];
+
+                Object target = new object();
+                Application.Current.Dispatcher.BeginInvoke(
+                    DispatcherPriority.Background,
+                    new Action(() => target = element));
+
                 Type type = element.GetType();
-                string propertyvalue = type.GetProperty(prop).GetValue(type).ToString();
+                PropertyInfo property = type.GetProperty(prop);
+                string propertyvalue = property.GetValue(target).ToString();
                 SynthesizeInput(propertyvalue);
             }
             else
