@@ -18,7 +18,7 @@ namespace AAA_Speech_Proto.Text2Speech
         //WPF Functionality must be outsourced to SynthProcessor resp. WPFSynthProcessor
         public int DebounceTimer { get; set; } = 300; //milliseconds
         private Dictionary<string, string> SpeechMappings = new Dictionary<string, string>();
-
+        public UIElement ObservedElement { get; set; }
         public WPFMicrosoftSynthesizer(UIElement element)
         {
             Init(element);
@@ -27,6 +27,7 @@ namespace AAA_Speech_Proto.Text2Speech
         {
             SeedMappings();
             ObserveMouse(element);
+            ObservedElement = element;
         }
         private void SeedMappings()
         {
@@ -49,7 +50,7 @@ namespace AAA_Speech_Proto.Text2Speech
             var mouseMove = Observable.FromEventPattern<MouseEventArgs>(element, "MouseMove")
                 .Sample(TimeSpan.FromMilliseconds(DebounceTimer))
                .Subscribe(
-                    args => Process(args.EventArgs.Source as FrameworkElement),
+                    completed => Process(),
                     error => LogError(error)
             );
         }
@@ -59,11 +60,18 @@ namespace AAA_Speech_Proto.Text2Speech
             Console.WriteLine("An error occured while processing", error.Message);
         }
 
-        private void Process(FrameworkElement element)
+        private void Process()
         {
+            IInputElement element = null;
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(() => {
+                element = Mouse.Captured;
+                Console.WriteLine("Inside Dispatcher");
+            })); //not working!
+
             Type type = element.GetType();
             string eletype = type.ToString();
-            eletype = "Button";
+            //eletype = "Button";
             if (SpeechMappings.ContainsKey(eletype))
             {
                 Console.WriteLine($"Evaluate speech output for {eletype}");
@@ -71,9 +79,9 @@ namespace AAA_Speech_Proto.Text2Speech
 
                 Object target = new Object();
                 Application.Current.Dispatcher.InvokeAsync(
-                    new Action(() => target = element));
+                    new Action(() => target = element)); //not working!
 
-                
+
                 PropertyInfo property = type.GetProperty(prop);
                 string propertyvalue = property.GetValue(target).ToString();
                 SynthesizeInput(propertyvalue);
