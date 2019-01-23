@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,8 +27,8 @@ namespace AAA_Speech_Proto.Text2Speech
         public void Init(UIElement element)
         {
             SeedMappings();
-            ObserveMouse(element);
-            ObservedElement = element;
+            //ObserveMouse(element);
+            //ObservedElement = element;
         }
         private void SeedMappings()
         {
@@ -63,11 +64,17 @@ namespace AAA_Speech_Proto.Text2Speech
         private void Process()
         {
             IInputElement element = null;
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(() => {
-                element = Mouse.Captured;
-                Console.WriteLine("Inside Dispatcher");
-            })); //not working!
+            new Thread(() =>
+            {
+                Console.WriteLine("Inside Thread");
+                Console.WriteLine("WPFMS_SpeechSynth Thread : " + Thread.CurrentThread.Name);
+                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
+                {
+                    Console.WriteLine("Inside Dispatcher");
+                    element = Mouse.Captured;
+                }));
+
+            }).Start();
 
             Type type = element.GetType();
             string eletype = type.ToString();

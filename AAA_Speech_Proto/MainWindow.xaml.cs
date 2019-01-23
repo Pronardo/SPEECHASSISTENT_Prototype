@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AAA_Speech_Proto
 {
@@ -48,6 +50,7 @@ namespace AAA_Speech_Proto
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Current UI Thread : " + Thread.CurrentThread.Name);
             var synthesizer = new WPFMicrosoftSynthesizer(this);
             synthesizer.SynthesizeInput("Hello User");
         }
