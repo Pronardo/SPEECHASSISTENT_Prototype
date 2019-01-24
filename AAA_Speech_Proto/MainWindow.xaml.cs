@@ -3,6 +3,7 @@ using AAA_Speech_Proto.Text2Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading;
@@ -27,6 +28,7 @@ namespace AAA_Speech_Proto
     {
         private SpeechRecon speechRecon = new VeryFirstRecon();
 
+        public double DebounceTimer { get; private set; }
 
         public MainWindow()
         {
@@ -50,9 +52,21 @@ namespace AAA_Speech_Proto
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Current UI Thread : " + Thread.CurrentThread.Name);
+            Console.WriteLine($"Current UI Thread : {Thread.CurrentThread.Name} associated with {Thread.CurrentThread.ManagedThreadId}");
             var synthesizer = new WPFMicrosoftSynthesizer(this);
             synthesizer.SynthesizeInput("Hello User");
+
+        }
+
+        private void Grid_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            string type = e.Source.GetType().Name;
+            string text = null;
+            if (type == "Label") text = (e.Source as Label).Content.ToString();
+            if (type == "Button") text = (e.Source as Button).Content.ToString();
+            if (type == "TextBox") text = (e.Source as TextBox).Text;
+            Console.WriteLine($"MouseMove in Thread {Thread.CurrentThread.ManagedThreadId}: {text}");
         }
     }
 }
