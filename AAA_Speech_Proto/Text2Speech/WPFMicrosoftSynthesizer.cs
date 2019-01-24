@@ -16,6 +16,11 @@ namespace AAA_Speech_Proto.Text2Speech
 {
     class WPFMicrosoftSynthesizer : SpeechSynth
     {
+        //Tasks:
+        //Debounce to MouseMoveEvent
+        //Compare e.Source to Mappings
+        //Get Mapped Property of recieved element
+        //Give String to TTS Engine
         //WPF Functionality must be outsourced to SynthProcessor resp. WPFSynthProcessor
         public int DebounceTimer { get; set; } = 300; //milliseconds
         private Dictionary<string, string> SpeechMappings = new Dictionary<string, string>();
@@ -27,13 +32,14 @@ namespace AAA_Speech_Proto.Text2Speech
         public void Init(UIElement element)
         {
             SeedMappings();
-            //ObserveMouse(element);
-            //ObservedElement = element;
+            ObserveMouse(element);
+            ObservedElement = element;
         }
         private void SeedMappings()
         {
             SpeechMappings.Add("Button", "Content");
             SpeechMappings.Add("Label", "Content");
+            SpeechMappings.Add("TextBox", "Text");
         }
         public void SynthesizeInput(string input)
         {
@@ -48,10 +54,12 @@ namespace AAA_Speech_Proto.Text2Speech
 
         public void ObserveMouse(UIElement element)
         {
-            var mouseMove = Observable.FromEventPattern<MouseEventArgs>(element, "MouseMove")
+            var mouseMove = Observable
+                .FromEventPattern<MouseEventArgs>(element, "MouseMove")
+                .Select(x => x.EventArgs.Source)
                 .Sample(TimeSpan.FromMilliseconds(DebounceTimer))
                .Subscribe(
-                    completed => Process(),
+                    completed => Process(completed),
                     error => LogError(error)
             );
         }
@@ -61,23 +69,10 @@ namespace AAA_Speech_Proto.Text2Speech
             Console.WriteLine("An error occured while processing", error.Message);
         }
 
-        private void Process()
+        private void Process(object element)
         {
-            IInputElement element = null;
-            new Thread(() =>
-            {
-                Console.WriteLine("Inside Thread");
-                Console.WriteLine("WPFMS_SpeechSynth Thread : " + Thread.CurrentThread.Name);
-                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() =>
-                {
-                    Console.WriteLine("Inside Dispatcher");
-                    element = Mouse.Captured;
-                }));
-
-            }).Start();
-
             Type type = element.GetType();
-            string eletype = type.ToString();
+            string eletype = type.Name;
             //eletype = "Button";
             if (SpeechMappings.ContainsKey(eletype))
             {
