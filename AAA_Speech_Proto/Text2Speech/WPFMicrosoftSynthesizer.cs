@@ -5,13 +5,9 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Speech.Synthesis;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace AAA_Speech_Proto.Text2Speech
 {
@@ -24,23 +20,22 @@ namespace AAA_Speech_Proto.Text2Speech
         //Get Mapped Property of recieved element
         //Give String to TTS Engine
         //WPF Functionality must be outsourced to SynthProcessor resp. WPFSynthProcessor
-        public int DebounceTimer { get; set; } = 1000; //milliseconds
+        public int DebounceDelay { get; set; } = 1000; //milliseconds
         private Dictionary<string, string> SpeechMappings = new Dictionary<string, string>();
-        public UIElement ObservedElement { get; set; }
-        public WPFMicrosoftSynthesizer(UIElement element)
-        {
-            Init(element);
-        }
+        public WPFMicrosoftSynthesizer(UIElement element) => Init(element);
+
+        #region ------------------------------------------------------ Initializers
         public void Init(UIElement element)
         {
+            LogWithThread($"----- Initializing WPFMicrosoftSynthesizer with root {element.GetType().Name}");
             SeedMappings();
             InitSynthesizer();
             ObserveMouse(element);
-            ObservedElement = element;
         }
 
         private void InitSynthesizer()
         {
+            LogWithThread($"----- Initializing SpeechSynthesizer");
             synthesizer = new SpeechSynthesizer
             {
                 Volume = 100,
@@ -55,77 +50,66 @@ namespace AAA_Speech_Proto.Text2Speech
             SpeechMappings.Add("Label", "Content");
             SpeechMappings.Add("TextBox", "Text");
         }
-        public void SynthesizeInput(string input)
-        {
-            if (String.IsNullOrEmpty(input)) { Console.WriteLine("Synthesize Failed input string null or empty"); return; }
-            Console.WriteLine($"synthesize input {input}");
-            //using (var synthesizer = new SpeechSynthesizer())
-            //{
-            //    synthesizer.Volume = 100;
-            //    synthesizer.Rate = -2;
-            //synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, CultureInfo.GetCultureInfo("en-US"));
-            synthesizer.Speak(input);
-            //}
-        }
+        #endregion
 
+        #region ------------------------------------------------------ Observable
         public void ObserveMouse(UIElement element)
         {
+            LogWithThread($"----- ObserveMouse with delay {DebounceDelay}");
             var mouseMove = Observable
                 .FromEventPattern<MouseEventArgs>(element, "MouseMove")
                 .Select(x => x.EventArgs.Source as UIElement)
                 .Where(x => x != null)
-                .Sample(TimeSpan.FromMilliseconds(DebounceTimer))
-            //   .Subscribe(
-            //        next => Process(next),
-            //        error => LogError(error)
-            //);
-            .Subscribe(this);
+                .Sample(TimeSpan.FromMilliseconds(DebounceDelay))
+                .Subscribe(this);
         }
+        #endregion
 
+        #region ------------------------------------------------------ Observer
         public void OnNext(UIElement element)
         {
             Type type = element.GetType();
             string eletype = type.Name;
-            //eletype = "Button";
-            if (SpeechMappings.ContainsKey(eletype))
+            if (!SpeechMappings.ContainsKey(eletype))
             {
-                Console.WriteLine($"Evaluate speech output for {eletype}");
-                var prop = SpeechMappings[eletype];
-
-
-                Console.WriteLine($"Current Synth Thread : {Thread.CurrentThread.Name} associated with {Thread.CurrentThread.ManagedThreadId}");
-                string propertyvalue = "";
-                Application.Current.Dispatcher.Invoke(
-                    new Action(() =>
-                    {
-                        PropertyInfo property = type.GetProperty(prop);
-                        Console.WriteLine($"   reflection to property: {property}");
-                        propertyvalue = property.GetValue(element).ToString();
-                        Console.WriteLine($"   reflection to proeprty value: {propertyvalue}");
-                    }));
-
-                //PropertyInfo property = type.GetProperty(prop);
-                //Console.WriteLine($"{property.GetValue(target).ToString()}");
-                //string propertyvalue = property.GetValue(target).ToString();
-                //Console.WriteLine($"propertyvalue outcome: {propertyvalue}");
-                SynthesizeInput(propertyvalue);
+                LogWithThread($"-- Element {eletype} is not mapped with speech settings");
+                return;
             }
-            else
-            {
-                Console.WriteLine($"-- Element {eletype} is not mapped with speech settings");
-            }
+
+            LogWithThread($"Try to speak contents of {eletype}");
+            var prop = SpeechMappings[eletype];
+            Application.Current.Dispatcher.Invoke(
+                () => TalkInMainThread(element, type, prop)
+                );
         }
 
-        public void OnError(Exception error)
-        {
-            Console.WriteLine("***** An error occured while processing", error.Message);
-        }
+        public void OnError(Exception error) => LogWithThread($"***** An error occured while processing {error.Message}");
 
         public void OnCompleted()
         {
-            Console.WriteLine("==============================");
-            Console.WriteLine("MouseMove-Observable completed");
-            Console.WriteLine("==============================");
+            LogWithThread("==============================");
+            LogWithThread("MouseMove-Observable completed");
+            LogWithThread("==============================");
         }
+        #endregion
+
+        #region ------------------------------------------------------ Various
+        private void TalkInMainThread(UIElement element, Type type, string prop)
+        {
+            var propertyInfo = type.GetProperty(prop);
+            string text = propertyInfo.GetValue(element).ToString();
+            LogWithThread($"   speak property {propertyInfo.Name} --> {text}");
+            SynthesizeInput(text);
+        }
+
+        public void SynthesizeInput(string input)
+        {
+            if (String.IsNullOrEmpty(input)) { LogWithThread("Synthesize Failed input string null or empty"); return; }
+            LogWithThread($"synthesize input <{input}>");
+            synthesizer.Speak(input);
+        }
+
+        private void LogWithThread(string msg) => Console.WriteLine($"[Thread {Thread.CurrentThread.ManagedThreadId}]: {msg}");
+        #endregion
     }
 }
