@@ -53,7 +53,8 @@ namespace AAA_Speech_Proto
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Console.WriteLine($"Current UI Thread : {Thread.CurrentThread.Name} associated with {Thread.CurrentThread.ManagedThreadId}");
-            var synthesizer = new WPFMicrosoftSynthesizer(this);
+            var synthesizer = WPFMicrosoftSynthesizer.OnlyOne;
+            synthesizer.SetWindow(this);
             synthesizer.SynthesizeInput("Hello User");
 
         }

@@ -13,6 +13,7 @@ namespace AAA_Speech_Proto.Text2Speech
 {
     class WPFMicrosoftSynthesizer : SpeechSynth, IObserver<UIElement>
     {
+        private static WPFMicrosoftSynthesizer onlyOne =null;
         private SpeechSynthesizer synthesizer;
         //Tasks:
         //Debounce to MouseMoveEvent
@@ -21,15 +22,28 @@ namespace AAA_Speech_Proto.Text2Speech
         //Give String to TTS Engine
         //WPF Functionality must be outsourced to SynthProcessor resp. WPFSynthProcessor
         public int DebounceDelay { get; set; } = 1000; //milliseconds
+        private IDisposable mouseMove;
         private Dictionary<string, string> SpeechMappings = new Dictionary<string, string>();
-        public WPFMicrosoftSynthesizer(UIElement element) => Init(element);
 
-        #region ------------------------------------------------------ Initializers
-        public void Init(UIElement element)
+        public static WPFMicrosoftSynthesizer OnlyOne
         {
-            LogWithThread($"----- Initializing WPFMicrosoftSynthesizer with root {element.GetType().Name}");
+            get
+            {
+                if (onlyOne == null) onlyOne = new WPFMicrosoftSynthesizer();
+                return onlyOne;
+            }
+        }
+
+        private WPFMicrosoftSynthesizer()
+        {
             SeedMappings();
             InitSynthesizer();
+        }
+
+        #region ------------------------------------------------------ Initializers
+        public void SetWindow(UIElement element)
+        {
+            LogWithThread($"----- Initializing WPFMicrosoftSynthesizer with root {element.GetType().Name}");
             ObserveMouse(element);
         }
 
@@ -56,7 +70,11 @@ namespace AAA_Speech_Proto.Text2Speech
         public void ObserveMouse(UIElement element)
         {
             LogWithThread($"----- ObserveMouse with delay {DebounceDelay}");
-            var mouseMove = Observable
+            if (mouseMove != null)
+            {
+                mouseMove.Dispose();
+            }
+             mouseMove = Observable
                 .FromEventPattern<MouseEventArgs>(element, "MouseMove")
                 .Select(x => x.EventArgs.Source as UIElement)
                 .Where(x => x != null)
