@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WpfText2Speech;
 
 namespace AAA_Speech_Proto
 {
@@ -55,6 +56,7 @@ namespace AAA_Speech_Proto
             Console.WriteLine($"Current UI Thread : {Thread.CurrentThread.Name} associated with {Thread.CurrentThread.ManagedThreadId}");
             var synthesizer = WPFMicrosoftSynthesizer.OnlyOne;
             synthesizer.SetWindow(this);
+            synthesizer.SetApplication(Application);
             synthesizer.SynthesizeInput("Hello User");
 
         }

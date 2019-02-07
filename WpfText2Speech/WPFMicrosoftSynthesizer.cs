@@ -9,7 +9,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
-namespace AAA_Speech_Proto.Text2Speech
+namespace WpfText2Speech
 {
     class WPFMicrosoftSynthesizer : SpeechSynth, IObserver<UIElement>
     {
@@ -24,7 +24,7 @@ namespace AAA_Speech_Proto.Text2Speech
         public int DebounceDelay { get; set; } = 1000; //milliseconds
         private IDisposable mouseMove;
         private Dictionary<string, string> SpeechMappings = new Dictionary<string, string>();
-
+        private Application application;
         public static WPFMicrosoftSynthesizer OnlyOne
         {
             get
@@ -56,6 +56,11 @@ namespace AAA_Speech_Proto.Text2Speech
                 Rate = -2
             };
             synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult, 0, CultureInfo.GetCultureInfo("en-US"));
+        }
+
+        public void SetApplication(System.Windows.Application application)
+        {
+            this.application = application;
         }
 
         private void SeedMappings()
@@ -96,7 +101,7 @@ namespace AAA_Speech_Proto.Text2Speech
 
             LogWithThread($"Try to speak contents of {eletype}");
             var prop = SpeechMappings[eletype];
-            Application.Current.Dispatcher.Invoke(
+            application.Current.Dispatcher.Invoke(
                 () => TalkInMainThread(element, type, prop)
                 );
         }

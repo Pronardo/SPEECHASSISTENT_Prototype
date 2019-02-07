@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AAA_Speech_Proto", "AAA_Speech_Proto\AAA_Speech_Proto.csproj", "{7F546723-019B-4F09-90B8-268E28201D37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfText2Speech", "WpfText2Speech\WpfText2Speech.csproj", "{ED293050-77CC-4DE7-ADBE-E9437239E7FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7F546723-019B-4F09-90B8-268E28201D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F546723-019B-4F09-90B8-268E28201D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F546723-019B-4F09-90B8-268E28201D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED293050-77CC-4DE7-ADBE-E9437239E7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED293050-77CC-4DE7-ADBE-E9437239E7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED293050-77CC-4DE7-ADBE-E9437239E7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED293050-77CC-4DE7-ADBE-E9437239E7FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
