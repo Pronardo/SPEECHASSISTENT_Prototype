@@ -8,7 +8,7 @@ using System.Speech.Synthesis;
 using System.Threading;
 using System.Windows;
 
-namespace WpfText2Speech1
+namespace WpfText2Speech
 {
     public class WPFMicrosoftSynthesizer : SpeechSynth, IObserver<UIElement>
     {

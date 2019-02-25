@@ -1,7 +1,7 @@
 ﻿using System.Speech.Synthesis;
 using System.Windows;
 
-namespace WpfText2Speech1
+namespace WpfText2Speech
 {
     interface SpeechSynth
     {

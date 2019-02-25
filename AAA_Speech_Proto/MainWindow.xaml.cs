@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using WpfText2Speech1;
+using WpfText2Speech;
 
 namespace AAA_Speech_Proto
 {

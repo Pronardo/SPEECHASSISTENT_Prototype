@@ -127,9 +127,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WpfText2Speech1\WpfText2Speech1.csproj">
+    <ProjectReference Include="..\WpfText2Speech1\WpfText2Speech.csproj">
       <Project>{713802aa-00c5-4984-8c51-9ea078fbfdc5}</Project>
-      <Name>WpfText2Speech1</Name>
+      <Name>WpfText2Speech</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
