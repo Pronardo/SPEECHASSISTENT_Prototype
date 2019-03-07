@@ -13,8 +13,7 @@ namespace AAA_Speech_Proto.Speech2Text
     {
         public CultureInfo LangCulture { get; set; } = new CultureInfo("en-us");
         public Grammar[] Grammars { get; set; }
-
-
+        public float VergeConfidence { get; set; } = 0.65f;
 
         private SpeechRecognitionEngine SRE;
         private EventHandler<MySpeechEventArgs> speechRecognized;
@@ -30,7 +29,7 @@ namespace AAA_Speech_Proto.Speech2Text
             }
             catch (InvalidOperationException exception)
             {
-                string text = String.Format("Speech Recongnition Process Failed", exception.Source, exception.Message);
+                string text = String.Format("Speech Recongnition Process Failed\r\n{0} - {1}.", exception.Source, exception.Message);
                 speechRecognized(this, new MySpeechEventArgs { Text = text });
             }
         }
@@ -47,6 +46,7 @@ namespace AAA_Speech_Proto.Speech2Text
 
         private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
+            if (VergeConfidence > e.Result.Confidence) { Console.WriteLine("Incomprehensible Input Audio"); return; }
             string text = e.Result.Text;
             speechRecognized(this, new MySpeechEventArgs { Text = text });
         }
