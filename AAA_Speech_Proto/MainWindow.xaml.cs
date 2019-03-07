@@ -27,7 +27,7 @@ namespace AAA_Speech_Proto
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SpeechRecon speechRecon = new VeryFirstRecon();
+        private SpeechRecon speechRecon = new WindowsOSRecon();
 
         public double DebounceTimer { get; private set; }
 

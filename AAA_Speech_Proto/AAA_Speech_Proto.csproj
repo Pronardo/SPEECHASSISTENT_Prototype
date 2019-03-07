@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
+    </Reference>
     <Reference Include="Rx.Net.Plus, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx.Net.Plus.1.1.9\lib\net46\Rx.Net.Plus.dll</HintPath>
     </Reference>
@@ -73,11 +77,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Speech2Text\MicrosoftSDKRecon.cs" />
     <Compile Include="Speech2Text\MySpeechEventArgs.cs" />
     <Compile Include="Speech2Text\SpeechCommand.cs" />
     <Compile Include="Speech2Text\SpeechProcessor.cs" />
     <Compile Include="Speech2Text\SpeechRecon.cs" />
-    <Compile Include="Speech2Text\VeryFirstRecon.cs" />
+    <Compile Include="Speech2Text\WindowsOSRecon.cs" />
     <Compile Include="Speech2Text\WPFSpeechProcessor.cs" />
     <Compile Include="Text2Speech\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>

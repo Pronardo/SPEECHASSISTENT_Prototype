@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AAA_Speech_Proto.Speech2Text
 {
-  class VeryFirstRecon : SpeechRecon
+  class WindowsOSRecon : SpeechRecon
   {
     private EventHandler<MySpeechEventArgs> speechRecognized; //Response Delegate
     private bool isBusy;
