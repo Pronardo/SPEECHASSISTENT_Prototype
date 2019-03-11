@@ -12,7 +12,7 @@ namespace AAA_Speech_Proto.Speech2Text
     class MicrosoftSDKRecon : SpeechRecon
     {
         public CultureInfo LangCulture { get; set; } = new CultureInfo("en-us");
-        public Grammar[] Grammars { get; set; }
+        public List<Grammar> Grammars { get; set; }
         public float VergeConfidence { get; set; } = 0.65f;
 
         private SpeechRecognitionEngine SRE;
@@ -62,6 +62,10 @@ namespace AAA_Speech_Proto.Speech2Text
                 Console.WriteLine($"{grammar.ToString()}");
                 SRE.LoadGrammarAsync(grammar);
             }
+        }
+        public void AddGrammars(Grammar[]grammars)
+        {
+            Grammars.AddRange(grammars);
         }
     }
 }
