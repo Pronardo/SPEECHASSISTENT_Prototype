@@ -1,25 +1,31 @@
-﻿<Window x:Class="AAA_Speech_Proto.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AAA_Speech_Proto"
+        xmlns:WpfText2Speech1="clr-namespace:WpfText2Speech1;assembly=WpfText2Speech" x:Class="AAA_Speech_Proto.MainWindow"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="MainWindow" Height="350" Width="525">
-    <Window.Content>
     <Grid MouseMove="Grid_MouseMove">
-        <Button Name="BtnRecognize" Content="Start Recognize"
-                HorizontalAlignment="Left" Margin="110,82,0,0" VerticalAlignment="Top" Width="75"
-                Click="BtnRecognize_Click"/>
-        <Label Content="Text comes here..." Name="lblText"
+        <Label Content="Text comes here..." x:Name="lblText"
                Tag="Firstname"
-               HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" Width="387"/>
-      <StackPanel>
-        <Button Name="BtnXxx" Content="Another Button"/>
-        <Label Name="LblXxx" Content="Another Label"/>
-        <TextBox Name="txtDummy" Text="Say 'Name Text Hansi'" Tag="Name"/>
-      </StackPanel>
+               HorizontalAlignment="Left" Margin="10,263,0,0" VerticalAlignment="Top" Width="387"/>
+        <!--<StackPanel>
+            <Button x:Name="BtnXxx" Content="Another Button"/>
+            <Label x:Name="LblXxx" Content="Another Label"/>
+            <TextBox x:Name="txtDummy" Text="Say 'Name Text Hansi'" Tag="Name"/>
+            <TextBox x:Name="txtFirstname_Copy" Text="Firstname" Tag="Firstname" Margin="0,0,173.4,0" Height="17"/>
+        </StackPanel>-->
+        <StackPanel>
+            <Button x:Name="BtnRecognize" Content="Start Recognize"
+                Click="BtnRecognize_Click"/>
+            <Label x:Name="lblfirstname" Content="Firstname: "/>
+            <TextBox x:Name="txtFirstname" Text="John" Tag="Firstname"/>
+            <Label x:Name="lbllastname" Content="Lastname: "/>
+            <TextBox x:Name="txtLastname" Text="Huber" Tag="Lastname"/>
+        </StackPanel>
+        <!--<WpfText2Speech1:UserControl1 HorizontalAlignment="Left" Height="88" Margin="-129,-121,0,0" VerticalAlignment="Top" Width="4"/>-->
     </Grid>
-    </Window.Content>
 </Window>

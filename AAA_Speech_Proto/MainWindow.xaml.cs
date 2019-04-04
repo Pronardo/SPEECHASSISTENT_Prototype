@@ -1,5 +1,4 @@
 ﻿using AAA_Speech_Proto.Speech2Text;
-using AAA_Speech_Proto.Text2Speech;
 using System;
 using System.Collections.Generic;
 using System.Linq;
